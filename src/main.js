@@ -1,22 +1,26 @@
 import Vue from "vue";
-import Vuex from "vuex";
 import App from "./App.vue";
+import store from "./store";
+import VueRouter from "vue-router";
 
 Vue.config.productionTip = false;
-Vue.use(Vuex);
+Vue.use(VueRouter);
+import Counter from "./components/Counter.vue";
+import TodoApp from "./components/TodoApp.vue";
+import Request from "./components/Request.vue";
 
-const store = new Vuex.Store({
-  state: {
-    count: 4,
-  },
-  mutations: {
-    increment(state) {
-      state.count++;
-    },
-  },
+const routes = [
+  { path: "/counter", component: Counter },
+  { path: "/todo", component: TodoApp },
+  { path: "/request", component: Request },
+];
+
+const router = new VueRouter({
+  routes,
 });
 
 new Vue({
   render: (h) => h(App),
-  store: store,
+  store,
+  router,
 }).$mount("#app");
