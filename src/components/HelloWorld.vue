@@ -1,19 +1,13 @@
 <template>
   <div class="hello">
-    <h1>{{ this.title }}</h1>
-    <h3>Installed CLI Plugins</h3>
-    <h3>Essential Links</h3>
-    <h3>Ecosystem</h3>
+    <h3>Đây là homepage</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {  
-    title: String,
-  },
-}
+  name: "HelloWorld",
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -1,9 +1,9 @@
 import Counter from "./components/Counter.vue";
-import TodoApp from "./components/TodoApp.vue";
-import Request from "./components/Request.vue";
+import TodoList from "./components/TodoList.vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
 export const routes = [
-  { path: "/counter", component: Counter },
-  { path: "/todo", component: TodoApp },
-  { path: "/request", component: Request },
+  { path: "/", name: "homepage", component: HelloWorld },
+  { path: "/mini", name: "minipage", component: Counter },
+  { path: "/todo", name: "todopage", component: TodoList },
 ];
