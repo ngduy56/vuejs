@@ -1,23 +1,13 @@
 <script>
-import Counter from './components/Counter.vue';
-import TodoApp from './components/TodoApp.vue';
-import Request from './components/Request.vue';
 
 export default {
   name: 'App',
-  components: {
-    Counter,
-    TodoApp,
-    Request,
-  },
 }
 </script>
 
 <template>
   <div id="app">
-    <Counter />
-    <TodoApp />
-    <Request />
+    <router-view />
   </div>
 </template>
 
