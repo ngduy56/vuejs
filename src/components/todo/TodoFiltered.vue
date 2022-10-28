@@ -19,25 +19,23 @@
 </template>
 
 <script>
-import { eventBus } from "@/main";
+import store from "@/store";
 
 export default {
   name: "todo-filtered",
-  data() {
-    return {
-      filter: "all",
-    };
+  computed: {
+    filter() {
+      return store.state.todo.filter;
+    },
   },
   methods: {
     changeFilter(filter) {
-      this.filter = filter;
-      eventBus.$emit("filterChanged", filter);
+      store.dispatch("todo/changeFilter", filter);
     },
   },
 };
 </script>
 <style scoped>
-
 button {
   margin-right: 10px;
   background-color: white;

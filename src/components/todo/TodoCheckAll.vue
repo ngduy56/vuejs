@@ -1,26 +1,24 @@
 <template>
   <div>
     <label
-      ><input type="checkbox" :checked="anyRemaining" @change="allChecked" />
+      ><input type="checkbox" :checked="!anyRemaining" @change="checkAll" />
       Check All</label
     >
   </div>
 </template>
 
 <script>
-import { eventBus } from "@/main";
-
+import store from "@/store";
 export default {
   name: "todo-check-all",
-  props: {
-    anyRemaining: {
-      type: Boolean,
-      required: true,
+  computed: {
+    anyRemaining() {
+      return store.getters["todo/anyRemaining"];
     },
   },
   methods: {
-    allChecked() {
-      eventBus.$emit("checkAllChanged", this.anyRemaining);
+    checkAll() {
+      store.dispatch("todo/checkAll", event.target.checked);
     },
   },
 };

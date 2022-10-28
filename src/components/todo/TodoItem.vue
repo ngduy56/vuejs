@@ -1,7 +1,7 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-left">
-      <input type="checkbox" v-model="completed" @change="doneEdit" />
+      <input type="checkbox" v-model="completed" @change="updateTodo" />
       <div
         v-if="!editing"
         @dblclick="editTodo"
@@ -15,8 +15,8 @@
         class="todo-item-edit"
         type="text"
         v-model="title"
-        @blur="doneEdit"
-        @keyup.enter="doneEdit"
+        @blur="updateTodo"
+        @keyup.enter="updateTodo"
         @keyup.esc="cancelEdit"
         v-focus
       />
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { eventBus } from "@/main";
+import store from "@/store";
 
 export default {
   name: "todo-item",
@@ -64,18 +64,18 @@ export default {
 
   methods: {
     removeTodo(id) {
-      eventBus.$emit("removedTodo", id);
+      store.dispatch("todo/removeTodo", id);
     },
     editTodo() {
       this.beforeEdit = this.title;
       this.editing = true;
     },
-    doneEdit() {
+    updateTodo() {
       if (this.title.trim() == "") {
         this.title = this.beforeEdit;
       }
       this.editing = false;
-      eventBus.$emit("doneEdit", {
+      store.dispatch("todo/updateTodo", {
         id: this.id,
         title: this.title,
         completed: this.completed,
@@ -96,7 +96,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  animation-duration: 0.3s;
 }
 .remove-item {
   cursor: pointer;

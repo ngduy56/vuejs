@@ -8,6 +8,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     counter: counter,
-    todo,
+    todo: todo,
   },
 });

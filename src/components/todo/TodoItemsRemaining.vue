@@ -3,12 +3,12 @@
 </template>
 
 <script>
+import store from '@/store';
 export default {
   name: "todo-remaining",
-  props: {
-    remaining: {
-      type: Number,
-      required: true,
+  computed: {
+    remaining() {
+      return store.getters["todo/remaining"];
     },
   },
 };

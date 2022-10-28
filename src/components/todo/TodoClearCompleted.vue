@@ -5,18 +5,17 @@
 </template>
 
 <script>
-import { eventBus } from "@/main";
+import store from "@/store";
 export default {
   name: "todo-clear-completed",
-  props: {
-    showClearCompletedButton: {
-      type: Boolean,
-      required: true,
+  computed: {
+    showClearCompletedButton() {
+      return store.getters["todo/showClearCompletedButton"];
     },
   },
   methods: {
     clearCompleted() {
-      eventBus.$emit("clearCompletedTodos");
+      store.dispatch("todo/clearCompleted");
     },
   },
 };
