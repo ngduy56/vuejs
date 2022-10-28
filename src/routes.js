@@ -1,5 +1,5 @@
 import Counter from "./components/Counter.vue";
-import TodoList from "./components/TodoList.vue";
+import TodoList from "./components/todo/TodoList.vue";
 import HelloWorld from "./components/HelloWorld.vue";
 
 export const routes = [
