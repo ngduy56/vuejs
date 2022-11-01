@@ -5,6 +5,7 @@
       <div
         v-if="!editing"
         @dblclick="editTodo"
+        @click="navigateChild(id)"
         class="todo-item-label"
         :class="{ completed: completed }"
       >
@@ -21,12 +22,12 @@
         v-focus
       />
     </div>
-    <div class="remove-item" @click="removeTodo(id)">&times;</div>
+    <div class="remove-item" @click="removeTodo">&times;</div>
   </div>
 </template>
 
 <script>
-import store from "@/store";
+import { mapActions } from "vuex";
 
 export default {
   name: "todo-item",
@@ -61,26 +62,32 @@ export default {
       },
     },
   },
-
   methods: {
-    removeTodo(id) {
-      store.dispatch("todo/removeTodo", id);
-    },
-    editTodo() {
-      this.beforeEdit = this.title;
-      this.editing = true;
+    ...mapActions({
+      remove: "todo/removeTodo",
+      update: "todo/updateTodo",
+    }),
+    removeTodo() {
+      this.remove(this.id);
     },
     updateTodo() {
       if (this.title.trim() == "") {
         this.title = this.beforeEdit;
       }
       this.editing = false;
-      store.dispatch("todo/updateTodo", {
+      this.update({
         id: this.id,
         title: this.title,
         completed: this.completed,
         editing: this.editing,
       });
+    },
+    navigateChild(id) {
+      this.$router.push({ name: "detailpage", params: { id: id } });
+    },
+    editTodo() {
+      this.beforeEdit = this.title;
+      this.editing = true;
     },
     cancelEdit() {
       this.title = this.beforeEdit;
@@ -103,6 +110,9 @@ export default {
 }
 .remove-item:hover {
   color: black;
+}
+.todo-item:hover {
+  cursor: pointer;
 }
 .todo-item-left {
   display: flex;

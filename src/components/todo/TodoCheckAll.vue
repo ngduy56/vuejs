@@ -8,17 +8,20 @@
 </template>
 
 <script>
-import store from "@/store";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "todo-check-all",
   computed: {
-    anyRemaining() {
-      return store.getters["todo/anyRemaining"];
-    },
+    ...mapGetters({
+      anyRemaining: "todo/anyRemaining",
+    }),
   },
   methods: {
+    ...mapActions({
+      check: "todo/checkAll",
+    }),
     checkAll() {
-      store.dispatch("todo/checkAll", event.target.checked);
+      this.check(event.target.checked);
     },
   },
 };

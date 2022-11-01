@@ -15,6 +15,9 @@
       :checkAll="!anyRemaining"
     >
     </todo-item>
+    <div class="extra-container">
+      <todo-pagination></todo-pagination>
+    </div>
 
     <div class="extra-container">
       <todo-check-all></todo-check-all>
@@ -31,12 +34,14 @@
 </template>
 
 <script>
-import store from "@/store";
+// import store from "@/store";
 import TodoCheckAll from "./TodoCheckAll";
 import TodoClearCompleted from "./TodoClearCompleted";
 import TodoFiltered from "./TodoFiltered";
 import TodoItem from "./TodoItem.vue";
 import TodoItemsRemaining from "./TodoItemsRemaining";
+import TodoPagination from "./TodoPagination";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "todo-list",
@@ -46,6 +51,7 @@ export default {
     TodoCheckAll,
     TodoFiltered,
     TodoClearCompleted,
+    TodoPagination,
   },
   data() {
     return {
@@ -53,20 +59,28 @@ export default {
       idForTodo: 3,
     };
   },
+  created() {
+    this.fetchData();
+  },
   computed: {
-    anyRemaining() {
-      return store.getters["todo/anyRemaining"];
-    },
-    todosFiltered() {
-      return store.getters["todo/todosFiltered"];
-    },
+    ...mapGetters({
+      anyRemaining: "todo/anyRemaining",
+      todosFiltered: "todo/todosFiltered",
+    }),
   },
   methods: {
+    ...mapActions({
+      add: "todo/addTodo",
+      fetch: "todo/fetchData",
+    }),
+    fetchData() {
+      this.fetch();
+    },
     addTodo() {
       if (this.newTodo.trim().length == 0) {
         return;
       }
-      store.dispatch("todo/addTodo", {
+      this.add({
         id: this.idForTodo,
         title: this.newTodo,
         completed: false,

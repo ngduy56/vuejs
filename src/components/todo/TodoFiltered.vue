@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import store from "@/store";
 
 export default {
@@ -29,8 +30,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      change: "todo/changeFilter",
+    }),
     changeFilter(filter) {
-      store.dispatch("todo/changeFilter", filter);
+      this.change(filter);
     },
   },
 };

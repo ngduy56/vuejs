@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import store from '@/store';
+import { mapGetters } from "vuex";
 export default {
   name: "todo-remaining",
   computed: {
-    remaining() {
-      return store.getters["todo/remaining"];
-    },
+    ...mapGetters({
+      remaining: "todo/remaining",
+    }),
   },
 };
 </script>

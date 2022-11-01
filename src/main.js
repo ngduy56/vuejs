@@ -6,7 +6,6 @@ import { routes } from "./routes";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-export const eventBus = new Vue();
 
 const router = new VueRouter({
   mode: "history",

@@ -5,17 +5,19 @@
 </template>
 
 <script>
-import store from "@/store";
+// import store from "@/store";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "todo-clear-completed",
   computed: {
-    showClearCompletedButton() {
-      return store.getters["todo/showClearCompletedButton"];
-    },
+    ...mapGetters({
+      showClearCompletedButton: "todo/showClearCompletedButton",
+    }),
   },
   methods: {
+    ...mapActions({ clear: "todo/clearCompleted" }),
     clearCompleted() {
-      store.dispatch("todo/clearCompleted");
+      this.clear();
     },
   },
 };

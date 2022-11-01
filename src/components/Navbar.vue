@@ -26,6 +26,9 @@
         <router-link :to="{ name: 'todopage' }" tag="li" class="nav-item">
           <a class="nav-link">Todo</a>
         </router-link>
+        <router-link :to="{ name: 'loginpage' }" tag="li" class="nav-item">
+          <a class="nav-link">Login</a>
+        </router-link>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input
