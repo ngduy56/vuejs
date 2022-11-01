@@ -37,14 +37,14 @@
         <div class="feedback-errors" v-if="errors.fullName">
           {{ errors.fullName }}
         </div>
-        <button class="btn-submit" type="submit">Login</button>
+        <button class="btn-submit" type="submit">Register</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "login-page",
   data() {
@@ -60,6 +60,16 @@ export default {
         fullName: "",
       },
     };
+  },
+  computed: {
+    ...mapGetters({ registerSuccess: "user/registerSuccess" }),
+  },
+  watch: {
+    registerSuccess() {
+      if (this.registerSuccess) {
+        this.$router.push("/login");
+      }
+    },
   },
   methods: {
     ...mapActions({
@@ -94,11 +104,10 @@ export default {
       if (!this.formLogin.password) {
         this.errors.password = "Password is required";
         isValid = false;
+      } else if (this.formLogin.password.length < 6) {
+        this.errors.password = "Length at least 6";
+        isValid = false;
       }
-      // } else if (this.password.length < 6) {
-      //   this.errors.password = "Length at least 6";
-      //   isValid = false;
-      // }
 
       if (!this.formLogin.fullName) {
         this.errors.fullName = "FullName is required";

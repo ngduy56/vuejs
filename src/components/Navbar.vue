@@ -29,6 +29,9 @@
         <router-link :to="{ name: 'loginpage' }" tag="li" class="nav-item">
           <a class="nav-link">Login</a>
         </router-link>
+        <router-link :to="{ name: 'registerpage' }" tag="li" class="nav-item">
+          <a class="nav-link">Register</a>
+        </router-link>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "login-page",
   data() {
@@ -46,6 +46,19 @@ export default {
         password: "",
       },
     };
+  },
+  computed: {
+    ...mapGetters({
+      logged: "user/logged",
+    }),
+  },
+  watch: {
+    logged() {
+      console.log(this.logged);
+      if (this.logged) {
+        this.$router.push("/home");
+      }
+    },
   },
   methods: {
     ...mapActions({

@@ -8,7 +8,7 @@ import HomePage from "./components/HomePage.vue";
 import RegisterPage from "./components/RegisterPage.vue";
 
 export const routes = [
-  { path: "/", name: "homepage", component: HelloWorld },
+  { path: "/", name: "helloworld", component: HelloWorld },
   { path: "/mini", name: "minipage", component: Counter },
   { path: "/login", name: "loginpage", component: LoginPage },
   { path: "/register", name: "registerpage", component: RegisterPage },
