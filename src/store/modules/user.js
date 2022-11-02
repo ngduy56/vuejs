@@ -1,22 +1,23 @@
-import { setAccessToken, removeAccessToken } from "@/utils/localStorage";
+import {
+  setAccessToken,
+  removeAccessToken,
+  setUser,
+  removeUser,
+  getUser,
+} from "@/utils/localStorage";
 import axios from "axios";
-// import AuthService from "../../apis/auth";
 
 const state = () => ({
   user: {
-    fullName: "",
-    username: "",
+    fullName: getUser() ? getUser().fullName : "",
+    username: getUser() ? getUser().username : "",
   },
   logged: false,
-  registerSuccess: false,
 });
 // getters
 const getters = {
   logged(state) {
     return state.logged;
-  },
-  registerSuccess(state) {
-    return state.registerSuccess;
   },
   getFullName(state) {
     return state.user.fullName;
@@ -41,38 +42,59 @@ const mutations = {
       username: "",
     };
   },
-  REGISTER_AUTH(state) {
-    state.registerSuccess = true;
-  },
 };
 // actions
 const actions = {
   async login({ commit }, credentials) {
-    // const response = await AuthService.login(credentials);
-    const response = await axios.post("https://api.ezfrontend.com/auth/local", {
-      identifier: credentials.identifier,
-      password: credentials.password,
-    });
-    setAccessToken(response.data.jwt);
-    commit("LOGIN_AUTH", response);
+    try {
+      const response = await axios.post(
+        "https://api.ezfrontend.com/auth/local",
+        {
+          identifier: credentials.identifier,
+          password: credentials.password,
+        }
+      );
+      if (response.status === 200) {
+        setAccessToken(response.data.jwt);
+        let user = {
+          fullName: response.data.user.fullName,
+          username: response.data.user.username,
+        };
+        setUser(user);
+        commit("LOGIN_AUTH", response);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   },
   logout({ commit }) {
     removeAccessToken();
+    removeUser();
     commit("LOGOUT_AUTH");
   },
   async register({ commit }, credentials) {
-    // const response = await AuthService.register(credentials);
-    const response = await axios.post(
-      "https://api.ezfrontend.com/auth/local/register",
-      {
-        email: credentials.username,
-        username: credentials.username,
-        password: credentials.password,
-        fullName: credentials.fullName,
+    try {
+      const response = await axios.post(
+        "https://api.ezfrontend.com/auth/local/register",
+        {
+          email: credentials.username,
+          username: credentials.username,
+          password: credentials.password,
+          fullName: credentials.fullName,
+        }
+      );
+      if (response.status === 200) {
+        setAccessToken(response.data.jwt);
+        let user = {
+          fullName: response.data.user.fullName,
+          username: response.data.user.username,
+        };
+        setUser(user);
+        commit("LOGIN_AUTH", response);
       }
-    );
-    setAccessToken(response.data.jwt);
-    commit("REGISTER_AUTH", response);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 

@@ -9,7 +9,6 @@
           :class="{ invalid: errors.username }"
           placeholder="Enter username"
           v-model="formLogin.username"
-          @blur="validate()"
         />
         <div class="feedback-errors" v-if="errors.username">
           {{ errors.username }}
@@ -21,7 +20,6 @@
           :class="{ invalid: errors.password }"
           placeholder="Enter password"
           v-model="formLogin.password"
-          @blur="validate()"
         />
         <div class="feedback-errors" v-if="errors.password">
           {{ errors.password }}
@@ -32,7 +30,6 @@
           :class="{ invalid: errors.fullName }"
           placeholder="Enter full name"
           v-model="formLogin.fullName"
-          @blur="validate()"
         />
         <div class="feedback-errors" v-if="errors.fullName">
           {{ errors.fullName }}
@@ -62,12 +59,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ registerSuccess: "user/registerSuccess" }),
+    ...mapGetters({ logged: "user/logged" }),
   },
   watch: {
-    registerSuccess() {
-      if (this.registerSuccess) {
-        this.$router.push("/login");
+    logged() {
+      if (this.logged) {
+        this.$router.push("/home");
       }
     },
   },

@@ -9,7 +9,6 @@
           :class="{ invalid: errors.username }"
           placeholder="Enter username"
           v-model="formLogin.username"
-          @blur="validate()"
         />
         <div class="feedback-errors" v-if="errors.username">
           {{ errors.username }}
@@ -20,12 +19,11 @@
           :class="{ invalid: errors.password }"
           placeholder="Enter password"
           v-model="formLogin.password"
-          @blur="validate()"
         />
         <div class="feedback-errors" v-if="errors.password">
           {{ errors.password }}
         </div>
-        <button class="btn-submit" type="submit">Login</button>
+        <button class="btn-submit" type="sumbit">Login</button>
       </div>
     </form>
   </div>
@@ -54,7 +52,6 @@ export default {
   },
   watch: {
     logged() {
-      console.log(this.logged);
       if (this.logged) {
         this.$router.push("/home");
       }
@@ -84,6 +81,9 @@ export default {
       } else if (!this.validateEmail(this.formLogin.username)) {
         this.errors.username = "Username must be email";
         isValid = false;
+      }
+      if (this.validateEmail(this.formLogin.username)) {
+        this.errors.username = "";
       }
 
       if (!this.formLogin.password) {
